@@ -2,6 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "Game.h"
+#include "Constants.h"
 
 void Camera::RecalculateFrontVector() {
 	// Prevent 'flipping' camera
@@ -94,5 +95,5 @@ void Camera::ProcessMouse(Input& input) {
 }
 
 void Camera::RecalculateProjection() {
-	m_proj = glm::perspective(m_fov, m_aspect, 0.1f, 1000.0f);
+	m_proj = glm::perspective(m_fov, m_aspect, NEAR, FAR);
 }

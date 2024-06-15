@@ -120,3 +120,7 @@ void Shader::SetVec2f(const std::string& name, const glm::vec2& val) {
 void Shader::SetInt(const std::string& name, int val) {
 	glUniform1i(GetUniformLocation(name), val);
 }
+
+void Shader::SetFloat(const std::string& name, float val) {
+	glUniform1f(GetUniformLocation(name), val);
+}

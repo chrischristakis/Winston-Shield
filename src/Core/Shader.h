@@ -32,5 +32,6 @@ public:
 	void SetVec3f(const std::string& name, const glm::vec3& val);
 	void SetVec2f(const std::string& name, const glm::vec2& val);
 	void SetInt(const std::string& name, int val);
+	void SetFloat (const std::string& name, float val);
 
 };

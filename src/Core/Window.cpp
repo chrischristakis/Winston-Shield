@@ -45,8 +45,11 @@ Window::Window(int width, int height, std::string title) {
     }
 
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_CULL_FACE);
-    //glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Store params in the window pointer GLFW provides for us for use in lambdas
     glfwSetWindowUserPointer(window, &m_params);

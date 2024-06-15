@@ -71,13 +71,19 @@
     <ClInclude Include="src\Core\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\normals.vs" />
-    <None Include="shaders\normals.fs" />
     <None Include="ext\assimp-vc143-mtd.dll" />
-    <None Include="shaders\normals.gs" />
-    <None Include="shaders\shader.vs" />
-    <None Include="shaders\shader.fs" />
+    <None Include="shaders\scene.vs" />
+    <None Include="shaders\scene.fs" />
+    <None Include="shaders\depth.vs" />
+    <None Include="shaders\depth.fs" />
+    <None Include="shaders\screenquad.vs" />
+    <None Include="shaders\screenquad.fs" />
+    <None Include="shaders\bubble.vs" />
+    <None Include="shaders\bubble.fs" />
   </ItemGroup>
 </Project>
