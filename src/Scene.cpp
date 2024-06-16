@@ -9,6 +9,7 @@
 #include "Core/Mesh.h"
 #include "Core/Model.h"
 #include "Constants.h"
+#include <cmath>
 
 std::unique_ptr<Shader> sceneShader;
 std::unique_ptr<Shader> depthShader;
@@ -82,13 +83,15 @@ static void RenderBubble(Shader& shader) {
 
 	model = glm::translate(model, { -4 + glfwGetTime()/2, 0, 0 });
 	glm::vec3 baseScale(2.0f);
+	//glm::vec3 baseScale(0.5f * fmod(glfwGetTime() * 4, 10));
 	model = glm::scale(model, baseScale);
 
 	shader.Use();
-	shader.SetMatrix4f("modelView", Game::GetCamera().GetView() * model);
+	shader.SetMatrix4f("view", Game::GetCamera().GetView());
+	shader.SetMatrix4f("model", model);
 	shader.SetMatrix4f("projection", Game::GetCamera().GetProjection());
-	shader.SetVec3f("color", { 0, 1, 1 });
-	shader.SetFloat("alpha", 0.3f);
+	shader.SetVec3f("color", { 0, 0.9f, 1 });
+	shader.SetFloat("alpha", 0.05f);
 	shader.SetVec2f("screensize", Game::GetWindow().GetSize());
 	shader.SetFloat("near", NEAR);
 	shader.SetFloat("far", FAR);
@@ -116,7 +119,7 @@ static void RenderScene(Shader& shader) {
 	shader.SetMatrix4f("projection", Game::GetCamera().GetProjection());
 
 	shader.SetMatrix4f("view", Game::GetCamera().GetView());
-	shader.SetVec3f("color", { 235 / 255.0f, 77 / 255.0f, 56 / 255.0f });
+	shader.SetVec3f("color", { 0.3f, 0.3f, 0.3f });
 	shader.SetVec3f("lightDir", { 0.5f, -0.72f, -0.65f });
 
 	sceneModel->Draw(shader);
@@ -141,9 +144,22 @@ void Scene::Render() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Draw scene normally
+	// Draw scene normally (topology)
 	RenderScene(*sceneShader);
 
 	// Draw bubble shield
+	// To avoid transparency issues, we render the front and back faces
+	// in two seperate calls, disabling the depth mask for both to avoid
+	// any transparency issues.  
+	// * Note: This means these draw calls must come after everything else,
+	//         since they don't write to the depth buffer and will be overwritten.
+	//         In practise, OIT or sorting faces would be more robust
+	glDepthMask(GL_FALSE);
+	glCullFace(GL_FRONT);
 	RenderBubble(*bubbleShader);
-}
+
+	glCullFace(GL_BACK);
+	RenderBubble(*bubbleShader);
+
+	glDepthMask(GL_TRUE);
+}	

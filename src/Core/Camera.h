@@ -35,6 +35,7 @@ public:
 	glm::mat4 GetViewProjection() const;
 	glm::mat4 GetView() const;
 	glm::mat4 GetProjection() const;
+	glm::vec3 GetPosition() const { return m_position; }
 
 	void Update(float dt);
 };
