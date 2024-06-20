@@ -27,7 +27,7 @@ void main() {
 	vec3 viewDir = normalize(-fragPos);
 	// The more orthogonal the camera is to the fragment, the stronger the rim light.
 	// abs() so that the back faces get treated the same as the front, giving a rim effect.
-	float rimStrength = max(0, 1 - abs(dot(viewDir, normal))); // The more orthogonal, the stronger
+	float rimStrength = 1 - abs(dot(viewDir, normal)); // The more orthogonal, the stronger
 	float rimFactor = pow(rimStrength, 4); // higher power = sharper rim light
 	vec4 rim = vec4(rimFactor);
 
@@ -39,12 +39,14 @@ void main() {
 	float bubbleDepth = LinearizeDepth(gl_FragCoord.z);
 
 	float threshold = 0.001;
-	float distance = abs(bubbleDepth - topographyDepth); 
-	float normalizedDistance = clamp(distance / threshold, 0.0, 1.0); // [0, 1]
+	float distance = abs(bubbleDepth - topographyDepth); // linear difference in depth 
+	
+	float normalizedDistance = clamp(distance / threshold, 0.0, 1.0); // [0, threshold] -> [0, 1]
 
-	vec4 target = vec4(color, alpha);
-	vec4 intersection = mix(vec4(1), target, normalizedDistance); // white to target gradient
+	vec4 intersection = mix(vec4(1), vec4(0), normalizedDistance); // white to transparent gradient
+
+	vec4 objectColor = vec4(color, alpha);
 
 	// Gradient from white to target colour
-	FragCol = intersection + rim;
+	FragCol = objectColor + intersection + rim;
 }
