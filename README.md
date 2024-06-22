@@ -1,5 +1,7 @@
 ## Winston's Shield from Overwatch
 
+<img src="assets/demo.gif" width="700px">
+
 This project emulates Winston's shield from overwatch using OpenGL. Some key features are:
 - Intersection shader using a depth pass and smooth edges
 - Variable rim lighting emulating the Fresnel effect
