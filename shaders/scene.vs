@@ -12,7 +12,7 @@ uniform mat4 view;
 uniform vec3 lightDir;
 
 void main() {
-	mat3 normalMat = mat3(transpose(inverse(modelView))); // Add view * model when model matrix added
+	mat3 normalMat = mat3(transpose(inverse(modelView)));
 	normal = normalMat * inNormal;
 	lightDirection = mat3(view) * lightDir;
 

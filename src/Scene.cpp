@@ -76,7 +76,7 @@ Scene::Scene() {
 }
 
 void Scene::Update(float dt) {
-	static float SPEED = 2.5f;
+	static float SPEED = 1.0f;
 	Input& input = Game::GetInput();
 	if (input.IsKeyPressed(GLFW_KEY_LEFT))
 		bubblePos.x -= SPEED * dt;
@@ -89,15 +89,13 @@ static void RenderBubble(Shader& shader) {
 
 	model = glm::translate(model, bubblePos);
 	glm::vec3 baseScale(2.0f);
-	//glm::vec3 baseScale(0.5f * fmod(glfwGetTime() * 4, 10));
 	model = glm::scale(model, baseScale);
 
 	shader.Use();
-	shader.SetMatrix4f("view", Game::GetCamera().GetView());
-	shader.SetMatrix4f("model", model);
+	shader.SetMatrix4f("modelView", Game::GetCamera().GetView() * model);
 	shader.SetMatrix4f("projection", Game::GetCamera().GetProjection());
 	shader.SetVec3f("color", { 0, 0.9f, 1 });
-	shader.SetFloat("alpha", 0.05f);
+	shader.SetFloat("alpha", 0.01f);
 	shader.SetVec2f("screensize", Game::GetWindow().GetSize());
 	shader.SetFloat("near", NEAR);
 	shader.SetFloat("far", FAR);
@@ -140,8 +138,6 @@ static void DrawScreenQuad() {
 }
 
 void Scene::Render() {
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	// Draw to depth buffer (First pass)
 	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 	glClear(GL_DEPTH_BUFFER_BIT);

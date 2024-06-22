@@ -3,7 +3,7 @@
 out vec4 FragCol;
 
 in vec3 normal;
-in vec3 fragPos;
+in vec3 viewDir;
 
 uniform sampler2D depthTexture;
 
@@ -24,29 +24,29 @@ float LinearizeDepth(float depth) {
 void main() {
 
 	// - Rim lighting -
-	vec3 viewDir = normalize(-fragPos);
+	vec3 viewAngle = normalize(-viewDir);
+
 	// The more orthogonal the camera is to the fragment, the stronger the rim light.
 	// abs() so that the back faces get treated the same as the front, giving a rim effect.
-	float rimStrength = 1 - abs(dot(viewDir, normal)); // The more orthogonal, the stronger
+	float rimStrength = 1 - abs(dot(viewAngle, normal)); // The more orthogonal, the stronger
+
 	float rimFactor = pow(rimStrength, 4); // higher power = sharper rim light
 	vec4 rim = vec4(rimFactor);
 
 	// - Create the intersection line -
-
 	// Turn frag coord from screenspace -> NDC, which corresponds to the UV
 	vec2 depthUV = gl_FragCoord.xy / screensize;
-	float topographyDepth = texture(depthTexture, depthUV).r;
+	float sceneDepth = texture(depthTexture, depthUV).r;
 	float bubbleDepth = LinearizeDepth(gl_FragCoord.z);
 
-	float threshold = 0.001;
-	float distance = abs(bubbleDepth - topographyDepth); // linear difference in depth 
-	
+	float distance = abs(bubbleDepth - sceneDepth); // linear difference in depth 
+
+	float threshold = 0.001;	
 	float normalizedDistance = clamp(distance / threshold, 0.0, 1.0); // [0, threshold] -> [0, 1]
 
 	vec4 intersection = mix(vec4(1), vec4(0), normalizedDistance); // white to transparent gradient
 
-	vec4 objectColor = vec4(color, alpha);
+	vec4 bubbleBase = vec4(color, alpha);
 
-	// Gradient from white to target colour
-	FragCol = objectColor + intersection + rim;
+	FragCol = bubbleBase + intersection + rim;
 }
