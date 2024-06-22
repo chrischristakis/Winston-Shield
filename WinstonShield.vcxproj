@@ -72,27 +72,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)$(Configuration)\intermediates</IntDir>
     <IncludePath>$(SolutionDir)src;C:\Users\chris\_dev\c++\libs\OpenGL\includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\chris\_dev\c++\libs\OpenGL\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)$(Configuration)\intermediates</IntDir>
     <IncludePath>$(SolutionDir)src;C:\Users\chris\_dev\c++\libs\OpenGL\includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\chris\_dev\c++\libs\OpenGL\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)$(Configuration)\intermediates</IntDir>
     <IncludePath>$(SolutionDir)src;C:\Users\chris\_dev\c++\libs\OpenGL\includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\chris\_dev\c++\libs\OpenGL\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)intermediates\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)$(Configuration)\intermediates</IntDir>
     <IncludePath>$(SolutionDir)src;C:\Users\chris\_dev\c++\libs\OpenGL\includes;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\chris\_dev\c++\libs\OpenGL\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

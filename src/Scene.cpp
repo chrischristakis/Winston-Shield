@@ -164,4 +164,5 @@ void Scene::Render() {
 	RenderBubble(*bubbleShader);
 
 	glDepthMask(GL_TRUE);
+
 }	
