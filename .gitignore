@@ -1,6 +1,6 @@
 .vs/
 *.sln
-.vcxproj
-.vcxproj*
+*.vcxproj
+*.vcxproj.*
 Debug/
 intermediates/
